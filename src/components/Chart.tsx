@@ -12,15 +12,25 @@ import { Result } from '@prisma/client'
 import React from 'react';
 import axios from 'axios';
 
+type ResultStat ={
+  voted_at: Date;
+  purchase: number;
+  gain: number;
+  return: number;
+  accumulated_purchase: number;
+  accumulated_gain: number;
+  accumulated_return: number;
+}
+
 interface State {
-  results: Result[];
+  resultStats: ResultStat[];
 }
 
 class Chart extends React.Component<{}, State> {
   constructor(props: any) {
     super(props);
     this.state = {
-      results: []
+      resultStats: []
     };
   }
   
@@ -32,7 +42,26 @@ class Chart extends React.Component<{}, State> {
     axios.get('/api/results')
     .then(response => {
       const results: Result[] = response.data;
-      this.setState({ results });
+      const resultStats: ResultStat[] = [];
+
+      for (let i = 0; i < results.length; i++) {
+        let accumulated_purchase = 0;
+        let accumulated_gain = 0;
+        for (let j = 0; j <= i; j++) {
+            accumulated_purchase += results[j].purchase;
+            accumulated_gain += results[j].gain;
+        }
+        resultStats.push({
+          voted_at: results[i].voted_at,
+          purchase: results[i].purchase,
+          gain: results[i].gain,
+          return: results[i].gain / results[i].purchase * 100,
+          accumulated_purchase,
+          accumulated_gain,
+          accumulated_return: accumulated_gain / accumulated_purchase * 100,
+        });
+      }
+      this.setState({ resultStats });
     })
     .catch(error => {
       console.error('Error fetching results data:', error);
@@ -45,7 +74,7 @@ class Chart extends React.Component<{}, State> {
         <ComposedChart
           width={700}
           height={540}
-          data={this.state.results}
+          data={this.state.resultStats}
           margin={{
             top: 5,
             right: 5,
@@ -59,15 +88,15 @@ class Chart extends React.Component<{}, State> {
             yAxisId={1}
             label={{ value: "purchase, gain", angle: -90, dx: -30 }}
           />
-          {/* <YAxis
+          <YAxis
             yAxisId={2}
             orientation="right"
             domain={[0, ]}
             label={{ value: "return", angle: -90, dx: 30 }}
-          />           */}
+          />          
           <Bar type="monotone" dataKey="purchase" yAxisId={1} barSize={10} fill="#8884d8" />
           <Bar type="monotone" dataKey="gain" yAxisId={1} barSize={10} fill="#3ba2f6" />
-          {/* <Line type="monotone" dataKey="return" yAxisId={2} stroke="#ff0092" /> */}
+          <Line type="monotone" dataKey="return" yAxisId={2} stroke="#ff0092" />
           <Legend verticalAlign='top' height={40}/>
           <Tooltip />
         </ComposedChart>
