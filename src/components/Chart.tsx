@@ -54,7 +54,7 @@ class Chart extends React.Component<{}, State> {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="votedAt" />
+          <XAxis dataKey="voted_at" />
           <YAxis
             yAxisId={1}
             label={{ value: "purchase, gain", angle: -90, dx: -30 }}
