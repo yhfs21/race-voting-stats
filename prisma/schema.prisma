@@ -16,8 +16,8 @@ datasource db {
 
 model Result {
   id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  votedAt   DateTime
+  created_at DateTime @default(now())
+  voted_at   DateTime
   purchase  Int
   gain      Int
 }
