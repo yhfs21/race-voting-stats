@@ -41,10 +41,10 @@ class Chart extends React.Component<{}, State> {
   
   render() {
     return (
-      <div className="container">
+      <div>
         <ComposedChart
           width={700}
-          height={300}
+          height={540}
           data={this.state.results}
           margin={{
             top: 5,
@@ -54,7 +54,7 @@ class Chart extends React.Component<{}, State> {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="voted_at" />
+          <XAxis dataKey="voted_at" angle={90} height={240} tickMargin={120}/>
           <YAxis
             yAxisId={1}
             label={{ value: "purchase, gain", angle: -90, dx: -30 }}
@@ -68,7 +68,7 @@ class Chart extends React.Component<{}, State> {
           <Bar type="monotone" dataKey="purchase" yAxisId={1} barSize={10} fill="#8884d8" />
           <Bar type="monotone" dataKey="gain" yAxisId={1} barSize={10} fill="#3ba2f6" />
           {/* <Line type="monotone" dataKey="return" yAxisId={2} stroke="#ff0092" /> */}
-          <Legend />
+          <Legend verticalAlign='top' height={40}/>
           <Tooltip />
         </ComposedChart>
       </div>
