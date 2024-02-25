@@ -63,7 +63,11 @@ fs.readFile(csvFilePath, 'utf8', (err: any, data: any) => {
   
         // モデルの create メソッドを動的に呼び出してデータを挿入します
         try {
-          await model.create({ data });
+          await model.upsert({
+            where: { id: data.id },
+            update: data,
+            create: data,
+          });
         } catch (error) {
           console.error('Error inserting data:', error);
         }
