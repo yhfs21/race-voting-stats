@@ -8,6 +8,10 @@ export default async function handler(
   res: NextApiResponse<Result[]>,
 ) {
   // todoテーブルから全件取得
-  const results: Result[] = await prisma.result.findMany()
+  const results: Result[] = await prisma.result.findMany({
+    orderBy: {
+      voted_at: 'asc',
+    },
+  })
   res.status(200).json(results);
 }
