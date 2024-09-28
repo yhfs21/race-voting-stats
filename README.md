@@ -1,8 +1,13 @@
+# race-voting-stats
+[yhfs21](https://x.com/yhfs21)の競馬の成績グラフだよ
+
 ## 参考
 [Next.js環境構築](https://qiita.com/konno5757/items/942b32a7e16883ebff48)  
 [Prisma](https://zenn.dev/mostlove/articles/c9e6f1aa45ea09)  
 [vercel-postgres](https://dev-harry-next.com/infrastructure/vercel-postgres-in-nextjs)  
 [vercel-postgres2](https://zenn.dev/msy/articles/8d991c79b739aa) 
+
+---
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
